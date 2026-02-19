@@ -10,14 +10,14 @@
 @layer base {
   /* CSS Custom Properties for theming */
   :root {
-    --color-bg: #ffffff;      /* White */
-    --color-card: #f8f9fa;    /* Light gray */
-    --color-card-primary: #f8f9fa; /* Light gray */
-    --color-border: #e5e7eb;  /* Light border */
-    --color-text: #000000;    /* Black */
-    --color-subtext: #6b7280; /* Gray 500 */
-    --color-primary: #000000;  /* Black */
-    --color-accent: #000000;  /* Black */
+    --color-bg: #020617;        /* Slate-950 style dark */
+    --color-card: #020617;      /* Match bg for subtle elevation via padding */
+    --color-card-primary: #020617;
+    --color-border: #1f2933;    /* Soft dark border */
+    --color-text: #e5e7eb;      /* Light text */
+    --color-subtext: #9ca3af;   /* Muted gray */
+    --color-primary: #38bdf8;   /* Accent blue */
+    --color-accent: #38bdf8;    /* Focus accent */
     --color-success: #22c55e; /* Green 500 */
     --color-danger: #ef4444;  /* Red 500 */
     --color-warn: #f59e0b;    /* Amber 500 */

@@ -32,12 +32,22 @@ export function HardwareCard({ data, loading }: HardwareCardProps) {
   const pixelRatio = getPixelRatio();
 
   return (
-    <div className="space-y-1 text-base text-text">
-      <div><span className="uppercase font-bold">GPU</span> {data.gpu}</div>
-      <div><span className="uppercase font-bold">Threads</span> {data.cores}</div>
-      <div><span className="uppercase font-bold">Memory</span> {memory}</div>
-      <div><span className="uppercase font-bold">Resolution</span> {resolution.replace('x', '×')}</div>
-      <div><span className="uppercase font-bold">Pixel Ratio</span> {pixelRatio}</div>
+    <div className="space-y-2 text-sm">
+      <div>
+        <span className="text-subtext">GPU:</span> {data.gpu}
+      </div>
+      <div>
+        <span className="text-subtext">Threads:</span> {data.cores}
+      </div>
+      <div>
+        <span className="text-subtext">Memory:</span> {memory}
+      </div>
+      <div>
+        <span className="text-subtext">Resolution:</span> {resolution.replace('x', '×')}
+      </div>
+      <div>
+        <span className="text-subtext">Pixel Ratio:</span> {pixelRatio}
+      </div>
     </div>
   );
 }

@@ -29,11 +29,25 @@ export function NetworkCard({ data, loading }: NetworkCardProps) {
   const location = [data.city, data.region].filter(Boolean).join(', ') || 'Unknown';
 
   return (
-    <div className="space-y-1 text-base text-text">
-      <div><span className="uppercase font-bold">IP</span> {data.ip}</div>
-      <div><span className="uppercase font-bold">Location</span> {location}</div>
-      <div><span className="uppercase font-bold">Country</span> {data.country}</div>
-      <div><span className="uppercase font-bold">ISP</span> {data.isp}</div>
+    <div className="space-y-2 text-sm">
+      <div>
+        <span className="text-subtext">Public IP:</span>{' '}
+        <span className="text-primary">{data.ip}</span>
+      </div>
+      <div>
+        <span className="text-subtext">Location:</span> {location}
+      </div>
+      <div>
+        <span className="text-subtext">Country:</span> {data.country}
+      </div>
+      <div>
+        <span className="text-subtext">ISP:</span> {data.isp}
+      </div>
+      {data.source && (
+        <div>
+          <span className="text-subtext">Source:</span> {data.source}
+        </div>
+      )}
     </div>
   );
 }

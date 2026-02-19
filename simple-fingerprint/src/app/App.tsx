@@ -18,8 +18,18 @@ export function App() {
 
   useInitialize(initialize);
 
+   const deviceId = loading ? 'CALCULATING...' : fingerprint?.visitorId || 'N/A';
+   const hash = fingerprint
+     ? `${fingerprint.canvasId}.${fingerprint.audioId}`
+     : loading
+       ? '...'
+       : 'N/A';
+   const isBotDetected = fingerprint?.isBotDetected;
+   const botText = isBotDetected ? 'FAILED' : 'PASSED';
+   const botClassName = isBotDetected ? 'text-danger' : 'text-success';
+
   return (
-    <main className="max-w-4xl mx-auto px-4 py-12 space-y-1">
+    <main className="max-w-7xl mx-auto px-4 py-12 space-y-16">
       {/* Error banner with retry */}
       {error && (
         <section
@@ -38,47 +48,63 @@ export function App() {
         </section>
       )}
 
-      {/* Device Fingerprint */}
-      <div className="text-base text-text">
-        <span className="uppercase font-bold">Device Fingerprint</span> <span className="font-mono">{loading ? 'CALCULATING...' : fingerprint?.visitorId || 'N/A'}</span>
-      </div>
+      {/* Header */}
+      <header className="text-center">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          Device Fingerprint
+        </h1>
+      </header>
 
-      {/* HASH */}
-      <div className="text-base font-mono break-all">
-        <span className="uppercase font-bold">HASH</span> {fingerprint
-          ? `${fingerprint.canvasId}.${fingerprint.audioId}`
-          : loading ? '...' : 'N/A'}
-      </div>
-
-      {/* Confidence */}
-      <div className="text-base text-text">
-        <span className="uppercase font-bold">Confidence</span> 99.9%
-      </div>
-
-      {/* Bot Check */}
-      {!loading && fingerprint && (
-        <div className={`text-base ${fingerprint.isBotDetected ? 'text-danger' : 'text-success'}`}>
-          <span className="uppercase font-bold">Bot Check</span> <span className="font-bold">{fingerprint.isBotDetected ? 'FAILED' : 'PASSED'}</span>
+      {/* Device ID */}
+      <section className="bg-card rounded-2xl p-8 md:p-12 text-center space-y-6">
+        <div>
+          <div className="text-primary text-xs font-bold uppercase tracking-widest">
+            Unique Device ID
+          </div>
+          <div className="font-mono font-bold text-3xl sm:text-4xl md:text-5xl break-all">
+            {deviceId}
+          </div>
         </div>
-      )}
 
-      {/* Spacing after 4 items */}
-      <div className="h-8" />
+        <div className="text-subtext text-xs font-mono break-all">
+          <span className="mr-1">HASH:</span>
+          {hash}
+        </div>
 
-      {/* Network Information */}
-      <NetworkCard data={network} loading={loading} />
+        <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+          <div className="bg-bg/80 p-4 rounded-xl">
+            <div className="text-[10px] uppercase text-subtext">Confidence</div>
+            <div className="font-bold text-white">99.9%</div>
+          </div>
+          <div className="bg-bg/80 p-4 rounded-xl">
+            <div className="text-[10px] uppercase text-subtext">Bot Check</div>
+            <div className={`font-bold ${botClassName}`}>
+              {loading || !fingerprint ? '...' : botText}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Spacing after 4 items */}
-      <div className="h-8" />
+      {/* Data Cards */}
+      <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Network */}
+        <div className="bg-card rounded-xl p-6 text-center space-y-5 hover:-translate-y-1 transition">
+          <h3 className="uppercase text-sm tracking-wider font-bold">Network Intelligence</h3>
+          <NetworkCard data={network} loading={loading} />
+        </div>
 
-      {/* Hardware Information */}
-      <HardwareCard data={fingerprint} loading={loading} />
+        {/* Hardware */}
+        <div className="bg-card rounded-xl p-6 text-center space-y-5 hover:-translate-y-1 transition">
+          <h3 className="uppercase text-sm tracking-wider font-bold">Hardware Signature</h3>
+          <HardwareCard data={fingerprint} loading={loading} />
+        </div>
 
-      {/* Spacing after 4 items */}
-      <div className="h-8" />
-
-      {/* Entropy Information */}
-      <EntropyCard data={fingerprint} loading={loading} />
+        {/* Entropy */}
+        <div className="bg-card rounded-xl p-6 text-center space-y-5 hover:-translate-y-1 transition">
+          <h3 className="uppercase text-sm tracking-wider font-bold">Entropy Sources</h3>
+          <EntropyCard data={fingerprint} loading={loading} />
+        </div>
+      </section>
     </main>
   );
 }

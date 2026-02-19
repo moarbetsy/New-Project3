@@ -1,9 +1,10 @@
-name: Deploy Vite app to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
 
 permissions:
@@ -13,7 +14,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -22,36 +23,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: simple-fingerprint/package-lock.json
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          cd simple-fingerprint
-          npm ci || npm install
+        run: npm ci
 
       - name: Build
-        run: |
-          cd simple-fingerprint
-          npm run build
+        run: npm run build
+        env:
+          GITHUB_PAGES_BASE: /${{ github.event.repository.name }}/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: simple-fingerprint/dist
+          path: './dist'
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
