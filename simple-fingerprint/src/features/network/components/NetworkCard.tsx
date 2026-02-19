@@ -1,5 +1,3 @@
-import { Network } from 'lucide-react';
-import { Card, Row, Skeleton } from '@/components/ui';
 import type { NetworkInfo } from '@/types';
 
 interface NetworkCardProps {
@@ -12,35 +10,30 @@ interface NetworkCardProps {
  * Displays network intelligence information
  */
 export function NetworkCard({ data, loading }: NetworkCardProps) {
+  if (loading) {
+    return (
+      <div className="text-base text-text">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="text-base text-text">
+        No network data available
+      </div>
+    );
+  }
+
+  const location = [data.city, data.region].filter(Boolean).join(', ') || 'Unknown';
+
   return (
-    <Card
-      title="Network Intelligence"
-      icon={<Network className="w-6 h-6 text-violet-400" />}
-      variant="primary"
-    >
-      {loading ? (
-        <Skeleton />
-      ) : data ? (
-        <>
-          <Row
-            label="Public IP"
-            value={data.ip}
-            highlight
-            blur={data.status === 'Restricted'}
-          />
-          <Row
-            label="Location"
-            value={[data.city, data.region].filter(Boolean).join(', ') || 'Unknown'}
-          />
-          <Row label="Country" value={data.country} />
-          <Row label="ISP" value={data.isp} />
-          <Row label="Source" value={data.source} small />
-        </>
-      ) : (
-        <div className="text-center text-subtext text-sm">
-          No network data available
-        </div>
-      )}
-    </Card>
+    <div className="space-y-1 text-base text-text">
+      <div><span className="uppercase font-bold">IP</span> {data.ip}</div>
+      <div><span className="uppercase font-bold">Location</span> {location}</div>
+      <div><span className="uppercase font-bold">Country</span> {data.country}</div>
+      <div><span className="uppercase font-bold">ISP</span> {data.isp}</div>
+    </div>
   );
 }

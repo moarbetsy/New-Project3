@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { z } from 'zod';
 import type { NetworkInfo } from '@/types';
 
@@ -129,15 +128,24 @@ export async function scanNetwork(): Promise<NetworkInfo> {
         data: { url: provider.url, type: provider.type },
       });
       // #endregion
-      const response = await axios.get(provider.url, {
-        timeout: 3000,
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      
+      const response = await fetch(provider.url, {
+        signal: controller.signal,
         headers: {
           'Accept': provider.type === 'json' ? 'application/json' : 'text/plain',
         },
       });
+      
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       if (provider.type === 'json') {
-        const data = response.data;
+        const data = await response.json();
 
         // Check for provider-specific error indicators
         if (provider.url.includes('ipwho') && data.success === false) {
@@ -219,7 +227,7 @@ export async function scanNetwork(): Promise<NetworkInfo> {
         };
       } else {
         // Text parsing for Cloudflare trace
-        const text = response.data as string;
+        const text = await response.text();
         const ipMatch = text.match(/ip=(.+)/);
         const locMatch = text.match(/loc=(.+)/);
 

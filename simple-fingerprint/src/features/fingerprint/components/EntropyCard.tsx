@@ -1,4 +1,3 @@
-import { Card, Row, Skeleton } from '@/components/ui';
 import {
   getPlatform,
   getTimezone,
@@ -16,23 +15,29 @@ interface EntropyCardProps {
  * Displays entropy sources used for fingerprinting
  */
 export function EntropyCard({ data, loading }: EntropyCardProps) {
+  if (loading) {
+    return (
+      <div className="text-base font-mono text-text">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="text-base font-mono text-text">
+        No entropy data available
+      </div>
+    );
+  }
+
   return (
-    <Card title="Entropy Sources">
-      {loading ? (
-        <Skeleton />
-      ) : data ? (
-        <>
-          <Row label="Canvas Hash" value={data.canvasId} mono />
-          <Row label="Audio Hash" value={data.audioId} mono />
-          <Row label="Platform" value={getPlatform()} />
-          <Row label="Timezone" value={getTimezone()} />
-          <Row label="Cookies" value={areCookiesEnabled() ? 'Yes' : 'No'} />
-        </>
-      ) : (
-        <div className="text-center text-subtext text-sm">
-          No entropy data available
-        </div>
-      )}
-    </Card>
+    <div className="space-y-1 text-base font-mono text-text">
+      <div><span className="uppercase font-bold">Canvas</span> {data.canvasId}</div>
+      <div><span className="uppercase font-bold">Audio</span> {data.audioId}</div>
+      <div><span className="uppercase font-bold">Platform</span> {getPlatform()}</div>
+      <div><span className="uppercase font-bold">Timezone</span> {getTimezone()}</div>
+      <div><span className="uppercase font-bold">Cookies</span> {areCookiesEnabled() ? 'Yes' : 'No'}</div>
+    </div>
   );
 }

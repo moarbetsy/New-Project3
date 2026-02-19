@@ -74,6 +74,7 @@ export async function getAudioHash(): Promise<string | number> {
 
 /**
  * Get GPU renderer information
+ * Extracts just the GPU model name from the full renderer string
  * @returns GPU model string or fallback message
  */
 export function getGPU(): string {
@@ -88,8 +89,57 @@ export function getGPU(): string {
     if (debugInfo) {
       const renderer = (gl as WebGLRenderingContext).getParameter(
         debugInfo.UNMASKED_RENDERER_WEBGL
-      );
-      return renderer || 'Generic / Virtual';
+      ) as string;
+      
+      if (!renderer) return 'Generic / Virtual';
+      
+      // Extract GPU model name from renderer string
+      // Examples:
+      // "ANGLE (NVIDIA, NVIDIA GeForce GTX 1660 Ti (0x00002182) Direct3D11 vs_5_0 ps_5_0, D3D11)" -> "GTX 1660 Ti"
+      // "NVIDIA GeForce RTX 3080" -> "RTX 3080"
+      // "AMD Radeon RX 6800" -> "RX 6800"
+      
+      // Try to match common GPU model patterns
+      const patterns = [
+        /(?:GeForce|Radeon|Intel)\s+([A-Z]{2,4}\s+\d+\w*(?:\s+\w+)?)/i, // GeForce GTX 1660 Ti, Radeon RX 6800
+        /([A-Z]{2,4}\s+\d+\w*(?:\s+\w+)?)/, // GTX 1660 Ti, RTX 3080
+      ];
+      
+      for (const pattern of patterns) {
+        const match = renderer.match(pattern);
+        if (match && match[1]) {
+          return match[1].trim();
+        }
+      }
+      
+      // If no pattern matches, try to extract the part after "GeForce" or "Radeon"
+      const geforceMatch = renderer.match(/GeForce\s+([^()]+)/i);
+      if (geforceMatch && geforceMatch[1]) {
+        const splitResult = geforceMatch[1].split(/[()]/);
+        const model = splitResult[0]?.trim();
+        if (!model) return renderer;
+        // Extract just the model number part (e.g., "GTX 1660 Ti" from "NVIDIA GeForce GTX 1660 Ti")
+        const modelMatch = model.match(/([A-Z]{2,4}\s+\d+\w*(?:\s+\w+)?)/);
+        if (modelMatch && modelMatch[1]) {
+          return modelMatch[1].trim();
+        }
+        return model;
+      }
+      
+      const radeonMatch = renderer.match(/Radeon\s+([^()]+)/i);
+      if (radeonMatch && radeonMatch[1]) {
+        const splitResult = radeonMatch[1].split(/[()]/);
+        const model = splitResult[0]?.trim();
+        if (!model) return renderer;
+        const modelMatch = model.match(/([A-Z]{2,4}\s+\d+\w*(?:\s+\w+)?)/);
+        if (modelMatch && modelMatch[1]) {
+          return modelMatch[1].trim();
+        }
+        return model;
+      }
+      
+      // Fallback: return the original renderer if no pattern matches
+      return renderer;
     }
     
     return 'Generic / Virtual';
