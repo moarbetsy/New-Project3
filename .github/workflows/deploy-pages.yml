@@ -38,6 +38,12 @@ jobs:
         run: |
           cd simple-fingerprint
           npm run build
+        env:
+          GITHUB_PAGES_BASE: /${{ github.event.repository.name }}/
+
+      - name: Create .nojekyll file
+        run: |
+          touch simple-fingerprint/dist/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
