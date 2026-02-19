@@ -8,10 +8,19 @@ main {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 1.686rem;
+  font-size: 1.433rem;
 }
 
-main h1,
+main header {
+  padding: 0;
+  margin: 0;
+}
+
+main h1 {
+  margin-bottom: 0.25em;
+  margin-top: 0;
+}
+
 main h3 {
   margin-bottom: 0;
 }
