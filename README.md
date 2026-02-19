@@ -1,15 +1,31 @@
-# new-project3
+## New-Project3 – Simple Fingerprint Scanner
 
-To install dependencies:
+This repo contains a Vite + React app in the `simple-fingerprint` directory.  
+It provides device fingerprinting and network intelligence features.
+
+## Install dependencies
+
+From the project root:
 
 ```bash
-bun install
+cd simple-fingerprint
+npm install
 ```
 
-To run:
+## Run the dev server
 
 ```bash
-bun run index.ts
+cd simple-fingerprint
+npm run dev
 ```
 
-This project was created using `bun init` in bun v1.3.9. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+Then open the URL Vite prints in your terminal (by default `http://localhost:3000/`).
+
+## Build for production
+
+```bash
+cd simple-fingerprint
+npm run build
+```
+
+The production build will be output to `simple-fingerprint/dist` and is used by GitHub Pages.
