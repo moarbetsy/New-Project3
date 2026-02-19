@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Device Identity | Precision Scanner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Precision Scanner - Advanced Device Fingerprinting and Network Intelligence">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+  <script type="module" src="/@vite/client"></script>
+  <script type="module" src="/src/main.tsx"></script>
+</head>
+
+<body class="bg-canvas text-text min-h-screen font-sans">
+
+<main class="max-w-7xl mx-auto px-4 py-12 space-y-16">
+
+  <!-- Header -->
+  <header class="text-center">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+      FINGERPRINT
+    </h1>
+  </header>
+
+  <!-- Device ID -->
+  <section class="bg-card rounded-2xl p-8 md:p-12 text-center space-y-4">
+    <div class="space-y-2 text-sm font-mono">
+      <div>Unique Device ID: 2AD89A23A5A51</div>
+      <div>Hash: 4794457550429562.2769238447607647</div>
+      <div>Confidence: 99.9%</div>
+      <div>Bot Check: Passed</div>
+    </div>
+  </section>
+
+  <!-- Data Cards -->
+  <section class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+    <!-- Network -->
+    <div class="bg-card rounded-xl p-6 text-center space-y-5 hover:-translate-y-1 transition">
+      <h3 class="uppercase text-sm tracking-wider font-bold">NETWORK</h3>
+      <div class="space-y-2 text-sm">
+        <div><span class="text-subtext">Public IP:</span> <span class="text-primary">184.163.77.75</span></div>
+        <div><span class="text-subtext">Location:</span> Montreal, Quebec</div>
+        <div><span class="text-subtext">Country:</span> Canada</div>
+        <div><span class="text-subtext">ISP:</span> Videotron Ltee</div>
+        <div><span class="text-subtext">Source:</span> ip-api.com</div>
+      </div>
+    </div>
+
+    <!-- Hardware -->
+    <div class="bg-card rounded-xl p-6 text-center space-y-5 hover:-translate-y-1 transition">
+      <h3 class="uppercase text-sm tracking-wider font-bold">HARDWARE</h3>
+      <div class="space-y-2 text-sm">
+        <div><span class="text-subtext">GPU:</span> GTX 1660 Ti</div>
+        <div><span class="text-subtext">Threads:</span> 8</div>
+        <div><span class="text-subtext">Memory:</span> ~8 GB</div>
+        <div><span class="text-subtext">Resolution:</span> 1920×1080</div>
+        <div><span class="text-subtext">Pixel Ratio:</span> 1</div>
+      </div>
+    </div>
+
+    <!-- Entropy -->
+    <div class="bg-card rounded-xl p-6 text-center space-y-5 hover:-translate-y-1 transition">
+      <h3 class="uppercase text-sm tracking-wider font-bold">ENTROPY</h3>
+      <div class="space-y-2 text-sm font-mono">
+        <div><span class="text-subtext">Canvas:</span> 4794457550429562</div>
+        <div><span class="text-subtext">Audio:</span> 2769238447607647</div>
+        <div><span class="text-subtext">Platform:</span> Win32</div>
+        <div><span class="text-subtext">Timezone:</span> America/Toronto</div>
+        <div><span class="text-subtext">Cookies:</span> Yes</div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+</body>
+</html>
