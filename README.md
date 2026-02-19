@@ -28,4 +28,10 @@ cd simple-fingerprint
 npm run build
 ```
 
-The production build will be output to `simple-fingerprint/dist` and is used by GitHub Pages.
+The production build will be output to `simple-fingerprint/dist`.
+
+## GitHub Pages deployment
+
+- The `dist/` folder inside `simple-fingerprint` is what gets deployed to GitHub Pages.
+- A GitHub Actions workflow builds the app and publishes `simple-fingerprint/dist` automatically on pushes to `main`.
+- Local dev uses `http://localhost:3000/`, while the live site is served from the GitHub Pages URL shown under **Settings → Pages** in this repo.
