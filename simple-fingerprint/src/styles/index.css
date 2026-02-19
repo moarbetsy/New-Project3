@@ -2,94 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/**
- * Global styles for Precision Scanner
- * Includes Tailwind CSS, custom properties, and accessibility improvements
- */
-
-@layer base {
-  /* CSS Custom Properties for theming */
-  :root {
-    --color-bg: #020617;        /* Slate-950 style dark */
-    --color-card: #020617;      /* Match bg for subtle elevation via padding */
-    --color-card-primary: #020617;
-    --color-border: #1f2933;    /* Soft dark border */
-    --color-text: #e5e7eb;      /* Light text */
-    --color-subtext: #9ca3af;   /* Muted gray */
-    --color-primary: #38bdf8;   /* Accent blue */
-    --color-accent: #38bdf8;    /* Focus accent */
-    --color-success: #22c55e; /* Green 500 */
-    --color-danger: #ef4444;  /* Red 500 */
-    --color-warn: #f59e0b;    /* Amber 500 */
-  }
-
-  /* Base styles */
-  html {
-    font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Improve focus visibility for accessibility */
-  *:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-  }
-
-  /* Screen reader only content */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.686rem;
 }
 
-/* Bold - outside @layer for proper cascade (Tailwind v4 doesn't include font utilities) */
-.font-bold {
-  font-weight: 700 !important;
+main h1,
+main h3 {
+  margin-bottom: 0;
 }
 
-@layer components {
-  /* Grid background pattern */
-  .bg-grid {
-    background-image: linear-gradient(to right, var(--color-card) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-card) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-}
-
-@layer utilities {
-  /* Respect user's motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    :root {
-      --color-border: #9ca3af; /* Increase border contrast for light mode */
-    }
-  }
+main h3 {
+  font-size: 1.25em;
 }
